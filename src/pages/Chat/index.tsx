@@ -1,40 +1,64 @@
-/** @format */
-import React, { JSX, useEffect, useState } from 'react';
-import { SendFromGemini } from '../../services/SendFromGemini';
 
-interface ChatPageProps {
-  example: string;
+import React, { useState } from "react";
+import { sendFromGemini } from "../../services/SendFromGemini/index.ts";
+
+interface Message {
+  id: number;
+  content: string;
+  sender: "user" | "bot";
 }
 
-interface ApiResponse {
-  message: string; 
-}
+const Chatbot: React.FC = () => {
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [input, setInput] = useState("");
 
-function ChatPage({ example }: ChatPageProps): JSX.Element {
-  const [data, setData] = useState<string | null>(null); 
+  const handleSend = async () => {
+    if (input.trim() === "") return;
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response: ApiResponse = await SendFromGemini('Hello from ChatPage!'); 
-		console.log('====================================');
-		console.log(response);
-		console.log('====================================');
-        setData(response.message); 
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
+    const userMessage: Message = {
+      id: messages.length + 1,
+      content: input,
+      sender: "user",
     };
 
-    fetchData(); 
-  }, []);
+    setMessages([...messages, userMessage]);
+    setInput("");
+
+    // Gửi tin nhắn và nhận phản hồi từ bot
+    const botReply = await sendFromGemini(input);
+
+    const botMessage: Message = {
+      id: messages.length + 2,
+      content: botReply,
+      sender: "bot",
+    };
+
+    setMessages((prevMessages) => [...prevMessages, botMessage]);
+  };
 
   return (
-    <div>
-      <h1>Example: {example}</h1>
-      <p>Data: {data ? data : 'Loading...'}</p>
-    </div>
+  <>
+        <h2 >Gemini Chatbot</h2>
+        <div >
+          {messages.map((msg) => (
+            <div key={msg.id}>
+              <p >
+                {msg.content}
+              </p>
+            </div>
+          ))}
+        </div>
+        <input
+          type="text"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          placeholder="Nhập tin nhắn..."
+        />
+        <button onClick={handleSend}>
+          Gửi
+        </button>
+        </>
   );
-}
+};
 
-export default ChatPage;
+export default Chatbot;

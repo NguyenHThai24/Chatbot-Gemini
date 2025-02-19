@@ -4,7 +4,7 @@ function App() {
 
   return (
     <>
-      <ChatPage example="Hello from App!"/>
+      <ChatPage />
     </>
   )
 }
