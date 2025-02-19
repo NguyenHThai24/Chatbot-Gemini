@@ -1,64 +1,44 @@
+import React, { useState } from 'react';
+import { sendFromGemini } from '../../services/SendFromGemini';
 
-import React, { useState } from "react";
-import { sendFromGemini } from "../../services/SendFromGemini/index.ts";
+const FormChat: React.FC = () => {
+  const [input, setInput] = useState<string>('');
+  const [response, setResponse] = useState<string>('');
 
-interface Message {
-  id: number;
-  content: string;
-  sender: "user" | "bot";
-}
-
-const Chatbot: React.FC = () => {
-  const [messages, setMessages] = useState<Message[]>([]);
-  const [input, setInput] = useState("");
-
-  const handleSend = async () => {
-    if (input.trim() === "") return;
-
-    const userMessage: Message = {
-      id: messages.length + 1,
-      content: input,
-      sender: "user",
-    };
-
-    setMessages([...messages, userMessage]);
-    setInput("");
-
-    // Gửi tin nhắn và nhận phản hồi từ bot
-    const botReply = await sendFromGemini(input);
-
-    const botMessage: Message = {
-      id: messages.length + 2,
-      content: botReply,
-      sender: "bot",
-    };
-
-    setMessages((prevMessages) => [...prevMessages, botMessage]);
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      const reply = await sendFromGemini(input);
+      setResponse(reply);
+    } catch (error) {
+      setResponse(`Error: ${error}`);
+    }
   };
 
   return (
-  <>
-        <h2 >Gemini Chatbot</h2>
-        <div >
-          {messages.map((msg) => (
-            <div key={msg.id}>
-              <p >
-                {msg.content}
-              </p>
-            </div>
-          ))}
-        </div>
+    <div>
+      <form onSubmit={handleSubmit}>
+        <label htmlFor="input">Enter your prompt:</label>
+        <br />
         <input
           type="text"
+          id="input"
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          placeholder="Nhập tin nhắn..."
+          style={{ width: '300px', marginBottom: '10px', padding: '5px' }}
         />
-        <button onClick={handleSend}>
-          Gửi
-        </button>
-        </>
+        <br />
+        <button type="submit">Submit</button>
+      </form>
+
+      {response && (
+        <div style={{ marginTop: '20px' }}>
+          <h3>API Response:</h3>
+          <pre>{response}</pre>
+        </div>
+      )}
+    </div>
   );
 };
 
-export default Chatbot;
+export default FormChat;

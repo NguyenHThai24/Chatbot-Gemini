@@ -6,14 +6,17 @@ export const sendFromGemini = async (message: string): Promise<string> => {
 		headers: {
 		  "Content-Type": "application/json",
 		},
-		body: JSON.stringify({ message }),
+		body: JSON.stringify({ prompt: message  }),
 	  });
-  
+	  console.log('====================================');
+	  console.log(response);
+	  console.log('====================================');
 	  if (!response.ok) {
 		throw new Error("Error fetching response from Gemini API");
 	  }
   
 	  const data = await response.json();
+
 	  return data.reply;
 	} catch (error) {
 	  console.error("Error communicating with Gemini API:", error);
