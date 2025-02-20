@@ -1,10 +1,11 @@
-import FormChart from "./pages/Chat"
+import ChatPage from "./pages/Chat"
+
 
 function App() {
 
   return (
     <>
-      <FormChart inputText="Hello Gemini"/>
+      <ChatPage/>
     </>
   )
 }
