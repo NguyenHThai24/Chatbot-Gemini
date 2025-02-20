@@ -1,45 +1,80 @@
-.container {
-    border: 2px solid black;
-    border-radius: 8px;
+.containerFormChat {
+    flex-grow: 1;
+    overflow-y: auto;
     padding: 8px;
-    margin: 8px auto;
-    width: 480px;
-    height: 620px;
+    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
 
-.title {
-    font-size: 1.5rem;
-    font-weight: bold;
-    text-align: center;
+.responseText {
+    padding: 0px;
+    font-size: 16px;
+    background-color: #f8f8f8;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    overflow-wrap: break-word;
+    height: 480px;
+    overflow-y: auto;
+}
+
+.chatMessage {
+    padding: 4px 12px;
+    border-radius: 6px;
+    margin-bottom: 12px;
+    max-width: 100%;
+    word-wrap: break-word;
+    font-size: 18px;
+}
+
+.userMessage {
+    background-color: #d0e8ff;
+    align-self: flex-end;
+    text-align: right;
+}
+
+.botMessage {
+    background-color: #e8e8e8;
+    align-self: flex-start;
+}
+
+.formInputTextContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
     padding: 8px 0;
 }
 
-.content {
-    flex-grow: 1;
-    overflow-y: auto;
-    border: 1px solid #ccc;
-    padding: 8px;
-    margin: 8px 0;
-}
-
 .formInputText {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    width: 460px;
-    padding: 4px 6px;
+    flex-grow: 1;
+    height: 40px;
+    padding: 8px;
     font-size: 16px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    outline: none;
 }
 
 .button {
-    width: 220px;
     padding: 10px;
     border-radius: 6px;
-    font-size: 20px;
-    margin-top: 5px;
+    font-size: 16px;
     background-color: rgb(163, 172, 253);
     font-weight: 600;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    transition: background-color 0.3s ease;
+}
+
+.button:hover {
+    background-color: rgb(113, 132, 253);
+}
+
+.button:disabled {
+    background-color: #999;
+    cursor: not-allowed;
 }
