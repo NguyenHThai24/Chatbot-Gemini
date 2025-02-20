@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { SendFromGemini } from "../../../services/SendFromGemini";
-import style from "../../../styles/FormChart.module.css";
+import style from "./FormChart.module.css";
 
 // Định nghĩa interface cho lịch sử tin nhắn
 interface ChatMessage {

@@ -1,0 +1,16 @@
+.container {
+    display: flex;
+    height: 100vh;
+}
+
+.sidebar {
+    width: 480px;
+    border: 2px solid black;
+    background-color: black;
+    color: white;
+}
+
+.body {
+    background-color: rgb(41, 40, 40);
+    color: white;
+}

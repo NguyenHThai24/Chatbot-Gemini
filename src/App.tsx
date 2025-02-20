@@ -1,11 +1,12 @@
-import ChatPage from "./pages/Chat"
+import DefaultLayout from "./layouts/DefaultLayout"
+
 
 
 function App() {
 
   return (
     <>
-      <ChatPage/>
+      <DefaultLayout/>
     </>
   )
 }
